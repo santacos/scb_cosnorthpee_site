@@ -108,6 +108,3 @@ Route::get('register', function()
 {
 	return View::make('admin.layouts.examples.register');
 });
-
-
-//Test SourceTree
