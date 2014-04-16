@@ -10,6 +10,9 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::get('tryPenCode',function(){
+	return View::make('try');
+});
 
 Route::get('/', function()
 {
