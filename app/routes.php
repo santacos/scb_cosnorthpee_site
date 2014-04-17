@@ -126,9 +126,7 @@ Route::get('register', function()
 	return View::make('admin.layouts.examples.register');
 });
 
-//<<<<<<< HEAD
 
-//Test SourceTree// Confide routes
 Route::get( 'user/create',                 'UserController@create');
 Route::post('user',                        'UserController@store');
 Route::get( 'user/login',                  'UserController@login');

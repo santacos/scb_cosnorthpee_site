@@ -303,6 +303,10 @@
 		</div><!-- .search-header -->
 
 
+		@if(Auth::check())
+			@include('user.includes.topbox')
+		@endif
+
 		<div>
 			<a href="{{URL::to('user/login')}}"> 
 			<button class="btn btn-mini btn-default" type="button" style="margin-top:10px;margin-left:50px;">log in</button>
