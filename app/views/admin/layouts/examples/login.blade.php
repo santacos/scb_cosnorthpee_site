@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	@include('admin.partials.assets')
-	    <body class="bg-black">
+	    <body class="bg-purple">
 
         <div class="form-box" id="login-box">
             <div class="header">Sign In</div>
