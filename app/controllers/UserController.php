@@ -81,7 +81,8 @@ class UserController extends BaseController {
         }
         else
         {
-            return View::make(Config::get('confide::login_form'));
+            //return View::make(Config::get('confide::login_form'));
+            return View::make('user.login');
         }
     }
 
@@ -108,7 +109,8 @@ class UserController extends BaseController {
             // caught by the authentication filter IE Redirect::guest('user/login').
             // Otherwise fallback to '/'
             // Fix pull #145
-            return Redirect::intended('/'); // change it to '/admin', '/dashboard' or something
+            //return Redirect::intended('/'); // change it to '/admin', '/dashboard' or something
+            return 'Yeah login leawww';
         }
         else
         {

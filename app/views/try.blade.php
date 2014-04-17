@@ -36,7 +36,7 @@
 		<title>carousel</title>
 	</head>
 
-	<body>
+	<body class="">
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Carousel indicators -->
     <ol class="carousel-indicators">
