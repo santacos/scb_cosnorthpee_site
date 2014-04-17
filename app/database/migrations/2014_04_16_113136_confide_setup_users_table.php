@@ -22,7 +22,6 @@ class ConfideSetupUsersTable extends Migration {
             $table->string('mobilephonenumber');
             $table->string('confirmation_code');
             $table->boolean('confirmed')->default(false);
-            $table->integer('idcard');
             $table->integer('status');
             $table->string('facebook_uid');
             $table->timestamps(); 
@@ -36,13 +35,13 @@ class ConfideSetupUsersTable extends Migration {
         });
           Schema::create('application_current_statuses', function($table)
         {
-             $table->increments('application_current_status_id');
+            $table->increments('application_current_status_id');
             $table->string('name');
             $table->timestamps();
         });
            Schema::create('positions', function($table)
         {
-             $table->increments('position_id');
+            $table->increments('position_id');
             $table->string('name');
             $table->timestamps();
         });
@@ -94,11 +93,12 @@ class ConfideSetupUsersTable extends Migration {
         });
 
         Schema::create('candidates', function($table)
-        {    $table->unsignedInteger('user_id');
-             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-             $table->string('experience');
-             $table->decimal('profile_completeness',5,2);
-             $table->primary('user_id');
+        {   $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('idcard');
+            $table->string('experience');
+            $table->decimal('profile_completeness',5,2);
+            $table->primary('user_id');
             $table->timestamps();
         });
          Schema::create('depts', function($table)
@@ -106,10 +106,9 @@ class ConfideSetupUsersTable extends Migration {
             $table->increments('dept_id');
             $table->string('name');
             $table->unsignedInteger('employee_hrbp_user_id');
-            $table->foreign('employee_hrbp_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('employee_recruiter_user_id');
-            $table->foreign('employee_recruiter_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            //Foreign Keys are below.
         });
            Schema::create('employees', function($table)
         {   
@@ -120,7 +119,7 @@ class ConfideSetupUsersTable extends Migration {
             $table->unsignedInteger('dept_id');
             $table->foreign('dept_id')->references('dept_id')->on('depts')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('employee_supervisor_user_id');
-            $table->foreign('employee_supervisor_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('employee_supervisor_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('is_manager');
             $table->primary('user_id');
             $table->timestamps();
@@ -128,33 +127,34 @@ class ConfideSetupUsersTable extends Migration {
            
           Schema::create('requisitions', function($table)
         {
-             $table->increments('requisition_id');
-             $table->integer('total_number');
-             $table->integer('get_number');
-              $table->unsignedInteger('employee_user_id');
-              $table->foreign('employee_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
-             $table->unsignedInteger('location_id');
-             $table->foreign('location_id')->references('location_id')->on('locations')->onDelete('cascade')->onUpdate('cascade');
-             $table->unsignedInteger('coperate_title_id');
-             $table->foreign('coperate_title_id')->references('coperate_title_id')->on('coperate_titles')->onDelete('cascade')->onUpdate('cascade');
-             $table->unsignedInteger('position_id');
-             $table->foreign('position_id')->references('position_id')->on('positions')->onDelete('cascade')->onUpdate('cascade');
+            $table->increments('requisition_id');
+            $table->integer('total_number');
+            $table->integer('get_number');
+            $table->unsignedInteger('employee_user_id');
+            $table->foreign('employee_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('location_id');
+            $table->foreign('location_id')->references('location_id')->on('locations')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('coperate_title_id');
+            $table->foreign('coperate_title_id')->references('coperate_title_id')->on('coperate_titles')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('position_id');
+            $table->foreign('position_id')->references('position_id')->on('positions')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('dept_id');
             $table->foreign('dept_id')->references('dept_id')->on('depts')->onDelete('cascade')->onUpdate('cascade');
-             $table->unsignedInteger('requisition_current_status_id');
-             $table->foreign('requisition_current_status_id')->references('requisition_current_status_id')->on('requisition_current_statuses')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('requisition_current_status_id');
+            $table->foreign('requisition_current_status_id')->references('requisition_current_status_id')->on('requisition_current_statuses')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
          Schema::create('applications', function($table)
         {
-             $table->increments('application_id');
-             $table->unsignedInteger('requisition_id');
-             $table->foreign('requisition_id')->references('requisition_id')->on('requisitions')->onDelete('cascade')->onUpdate('cascade');
-             $table->unsignedInteger('candidate_user_id');
-             $table->foreign('candidate_user_id')->references('user_id')->on('candidates')->onDelete('cascade')->onUpdate('cascade');
-             $table->unsignedInteger('application_current_status_id');
-             $table->foreign('application_current_status_id')->references('application_current_status_id')->on('application_current_statuses')->onDelete('cascade')->onUpdate('cascade');
-             $table->boolean('result');
+            $table->increments('application_id');
+            $table->unsignedInteger('requisition_id');
+            $table->foreign('requisition_id')->references('requisition_id')->on('requisitions')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('candidate_user_id');
+            $table->foreign('candidate_user_id')->references('user_id')->on('candidates')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('application_current_status_id');
+            $table->foreign('application_current_status_id')->references('application_current_status_id')->on('application_current_statuses')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('result');
+            $table->dateTime('datetime_prev_status');
             $table->timestamps();
         });
           Schema::create('interview_logs', function($table)
@@ -167,23 +167,17 @@ class ConfideSetupUsersTable extends Migration {
              $table->primary(array('visit_number', 'application_id'));
              $table->timestamps();
         });
-         
-
             Schema::create('application_logs', function($table)
         {   $table->unsignedInteger('application_id');
             $table->foreign('application_id')->references('application_id')->on('applications')->onDelete('cascade')->onUpdate('cascade');
-             $table->integer('action_type');
+            $table->integer('action_type');
             $table->unsignedInteger('employee_user_id');
             $table->foreign('employee_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
-             $table->timestamp('action_datetime');
-             $table->float('length_to_prev_action_in_hour');
+            $table->timestamp('action_datetime');
+            $table->float('length_to_prev_action_in_hour');
             $table->primary(array('application_id', 'action_type'));
             $table->timestamps();
         });
-            
-          
-                    
-
           Schema::create('interview_evaluations', function($table)
         {
             $table->unsignedInteger('application_id');
@@ -213,25 +207,21 @@ class ConfideSetupUsersTable extends Migration {
             $table->primary(array('skill_id', 'candidate_user_id'));
             $table->timestamps();
         });
-           
-         
-            
-
-       
          Schema::create('requisition_logs', function($table)
         {   
             $table->unsignedInteger('requisition_id');
             $table->foreign('requisition_id')->references('requisition_id')->on('requisitions')->onDelete('cascade')->onUpdate('cascade');
-             $table->integer('action_type');
-             $table->timestamp('action_datetime');
+            $table->integer('action_type');
+            $table->integer('send_number')->default(0);
+            $table->timestamp('action_datetime');
             $table->unsignedInteger('employee_user_id');
             $table->foreign('employee_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');  
-             $table->float('length_to_prev_action_in_hour');
-              $table->boolean('result');
-            $table->primary(array('requisition_id', 'action_type'));
+            $table->float('length_to_prev_action_in_hour');
+            $table->boolean('result');
+            $table->dateTime('datetime_prev_status');
+            $table->primary(array('requisition_id', 'action_type','send_number'));
             $table->timestamps();
         });
-        
          Schema::create('position_questions', function($table)
         {
             $table->unsignedInteger('position_id');
@@ -270,6 +260,16 @@ class ConfideSetupUsersTable extends Migration {
             $table->unsignedInteger('used_answer_id');
             $table->foreign('used_answer_id')->references('used_answer_id')->on('used_answers')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+        });
+
+
+//-----------------------------------------------------------------------------
+
+
+        Schema::table('depts', function($table)
+        {
+             $table->foreign('employee_hrbp_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
+             $table->foreign('employee_recruiter_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
