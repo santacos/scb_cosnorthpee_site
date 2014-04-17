@@ -10,9 +10,23 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+
+
+//////////////////// test area/////////////////////////////
 Route::get('tryPenCode',function(){
 	return View::make('try');
 });
+
+Route::get('home',function(){
+	return View::make('user.home');
+});
+Route::get('home/login',function(){
+	return View::make('user.login');
+});
+
+
+
+///////////////////////////////////////////////////
 
 Route::get('/', function()
 {
@@ -116,7 +130,6 @@ Route::get('register', function()
 
 <<<<<<< HEAD
 
-//Test SourceTree// Confide routes
 Route::get( 'user/create',                 'UserController@create');
 Route::post('user',                        'UserController@store');
 Route::get( 'user/login',                  'UserController@login');
