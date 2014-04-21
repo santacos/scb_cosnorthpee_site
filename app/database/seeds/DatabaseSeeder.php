@@ -81,31 +81,49 @@ class AllTableSeeder extends Seeder {
 		Candidate::create(array('user_id' => 4
 							));
 
-//EMPLOYEE
-		/*Employee::create(array(	'user_id' => 4,
-							'position_id' => 1,
-							'dept_id' => 1,
-							'employee_supervisor_user_id' => 'NULL',
-							'is_manager' => false
+//POSITION
+		Position::create(array('position_id' => 1,
+							'name' => 'position1'
 							));
-		Employee::create(array(	'user_id' => 1,
-							'position_id' => 2,
-							'dept_id' => 2,
-							'employee_supervisor_user_id' => 4,
-							'is_manager' => false
+		Position::create(array('position_id' => 2,
+							'name' => 'position2'
 							));
-		Employee::create(array(	'user_id' => 2,
-							'position_id' => 3,
-							'dept_id' => 3,
-							'employee_supervisor_user_id' => 4,
-							'is_manager' => false
+		Position::create(array('position_id' => 3,
+							'name' => 'position3'
 							));
-		Employee::create(array(	'user_id' => 3,
-							'position_id' => 4,
-							'dept_id' => 5,
-							'employee_supervisor_user_id' => 2,
-							'is_manager' => false
-							));*/
+		Position::create(array('position_id' => 4,
+							'name' => 'position4'
+							));
+		Position::create(array('position_id' => 5,
+							'name' => 'position5'
+							));
+
+//DEPT
+		Dept::create(array(	'dept_id' => 1,
+							'name' => 'department1',
+							'employee_hrbp_user_id' => 1,
+							'employee_recruiter_user_id' => 1
+							));
+		Dept::create(array(	'dept_id' => 2,
+							'name' => 'department2',
+							'employee_hrbp_user_id' => 4,
+							'employee_recruiter_user_id' => 3
+							));
+		Dept::create(array(	'dept_id' => 3,
+							'name' => 'department3',
+							'employee_hrbp_user_id' => 1,
+							'employee_recruiter_user_id' => 3
+							));
+		Dept::create(array(	'dept_id' => 4,
+							'name' => 'department4',
+							'employee_hrbp_user_id' => 1,
+							'employee_recruiter_user_id' => 2
+							));
+		Dept::create(array(	'dept_id' => 5,
+							'name' => 'department4',
+							'employee_hrbp_user_id' => 1,
+							'employee_recruiter_user_id' => 2
+							));
 
 //COPERATE TITLE
 		CoperateTitle::create(array(	'name' => 'officer1',
@@ -116,36 +134,6 @@ class AllTableSeeder extends Seeder {
 							));
 		CoperateTitle::create(array(	'name' => 'officer3',
 							'SLA' => 60
-							));
-
-//DEPT
-		/*Dept::create(array(	'name' => 'department1',
-							'employee_hrbp_user_id' => 1,
-							'employee_recruiter_user_id' => 1
-							));
-		Dept::create(array(	'name' => 'department2',
-							'employee_hrbp_user_id' => 4,
-							'employee_recruiter_user_id' => 3
-							));
-		Dept::create(array(	'name' => 'department3',
-							'employee_hrbp_user_id' => 1,
-							'employee_recruiter_user_id' => 3
-							));
-		Dept::create(array(	'name' => 'department4',
-							'employee_hrbp_user_id' => 1,
-							'employee_recruiter_user_id' => 2
-							));*/
-
-//POSITION
-		Position::create(array(	'name' => 'position1'
-							));
-		Position::create(array(	'name' => 'position2'
-							));
-		Position::create(array(	'name' => 'position3'
-							));
-		Position::create(array(	'name' => 'position4'
-							));
-		Position::create(array(	'name' => 'position5'
 							));
 
 //LOCATION
@@ -166,6 +154,31 @@ class AllTableSeeder extends Seeder {
 		Location::create(array(	'name' => 'location8'
 							));
 
+//EMPLOYEE
+		Employee::create(array(	'user_id' => 4,
+							'position_id' => 1,
+							'dept_id' => 1,
+							'employee_supervisor_user_id' => null,
+							'is_manager' => false
+							));
+		Employee::create(array(	'user_id' => 1,
+							'position_id' => 2,
+							'dept_id' => 1,
+							'employee_supervisor_user_id' => 4,
+							'is_manager' => false
+							));
+		Employee::create(array(	'user_id' => 2,
+							'position_id' => 3,
+							'dept_id' => 3,
+							'employee_supervisor_user_id' => 4,
+							'is_manager' => false
+							));
+		Employee::create(array(	'user_id' => 3,
+							'position_id' => 4,
+							'dept_id' => 5,
+							'employee_supervisor_user_id' => 2,
+							'is_manager' => false
+							));
 
 /*
 		::create(array(	'' => '',

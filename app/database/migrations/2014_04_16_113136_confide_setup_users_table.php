@@ -118,8 +118,8 @@ class ConfideSetupUsersTable extends Migration {
             $table->foreign('position_id')->references('position_id')->on('positions')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('dept_id');
             $table->foreign('dept_id')->references('dept_id')->on('depts')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('employee_supervisor_user_id');
-            $table->foreign('employee_supervisor_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('employee_supervisor_user_id')->nullable();
+            $table->foreign('employee_supervisor_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('is_manager');
             $table->primary('user_id');
             $table->timestamps();
@@ -186,7 +186,7 @@ class ConfideSetupUsersTable extends Migration {
             $table->foreign('employee_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('visit_number');
             $table->float('score');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
            Schema::create('skills', function($table)
@@ -268,8 +268,8 @@ class ConfideSetupUsersTable extends Migration {
 
         Schema::table('depts', function($table)
         {
-             $table->foreign('employee_hrbp_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
-             $table->foreign('employee_recruiter_user_id')->references('user_id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
+             $table->foreign('employee_hrbp_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+             $table->foreign('employee_recruiter_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
