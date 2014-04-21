@@ -84,15 +84,7 @@ class ConfideSetupUsersTable extends Migration {
             $table->integer('point');
             $table->timestamps();
         });
-            Schema::create('used_answers', function($table)
-        {
-            $table->increments('used_answer_id');
-            $table->string('name');
-            $table->integer('point');
-            $table->timestamps();
-        });
-
-        Schema::create('candidates', function($table)
+          Schema::create('candidates', function($table)
         {   $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('idcard');
@@ -101,7 +93,7 @@ class ConfideSetupUsersTable extends Migration {
             $table->primary('user_id');
             $table->timestamps();
         });
-         Schema::create('depts', function($table)
+          Schema::create('depts', function($table)
         {
             $table->increments('dept_id');
             $table->string('name');
@@ -111,7 +103,7 @@ class ConfideSetupUsersTable extends Migration {
             $table->foreign('employee_recruiter_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
-           Schema::create('employees', function($table)
+          Schema::create('employees', function($table)
         {   
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
@@ -125,7 +117,6 @@ class ConfideSetupUsersTable extends Migration {
             $table->primary('user_id');
             $table->timestamps();
         });
-           
           Schema::create('requisitions', function($table)
         {
             $table->increments('requisition_id');
@@ -208,7 +199,7 @@ class ConfideSetupUsersTable extends Migration {
             $table->primary(array('skill_id', 'candidate_user_id'));
             $table->timestamps();
         });
-         Schema::create('requisition_logs', function($table)
+          Schema::create('requisition_logs', function($table)
         {   
             $table->unsignedInteger('requisition_id');
             $table->foreign('requisition_id')->references('requisition_id')->on('requisitions')->onDelete('cascade')->onUpdate('cascade');
@@ -223,7 +214,7 @@ class ConfideSetupUsersTable extends Migration {
             $table->primary(array('requisition_id', 'action_type','send_number'));
             $table->timestamps();
         });
-         Schema::create('position_questions', function($table)
+          Schema::create('position_questions', function($table)
         {
             $table->unsignedInteger('position_id');
             $table->foreign('position_id')->references('position_id')->on('positions')->onDelete('cascade')->onUpdate('cascade');
@@ -233,14 +224,19 @@ class ConfideSetupUsersTable extends Migration {
             $table->primary(array('position_id', 'question_id'));
             $table->timestamps();
         });
-         Schema::create('requisition_questions', function($table)
+          Schema::create('used_questions', function($table)
         {
+            $table->increments('used_question_id');
             $table->unsignedInteger('requisition_id');
             $table->foreign('requisition_id')->references('requisition_id')->on('requisitions')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('question_id');
-            $table->foreign('question_id')->references('question_id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
             $table->string('question');
-            $table->primary(array('requisition_id', 'question_id'));
+            $table->timestamps();
+        });
+          Schema::create('used_answers', function($table)
+        {
+            $table->increments('used_answer_id');
+            $table->string('name');
+            $table->integer('point');
             $table->timestamps();
         });
           Schema::create('question_answers', function($table)
@@ -252,14 +248,24 @@ class ConfideSetupUsersTable extends Migration {
             $table->primary(array('question_id', 'answer_id'));
             $table->timestamps();
         });
-          Schema::create('requisition_question_used_answers', function($table)
+          Schema::create('uquas', function($table)//used _question_used_answers
         {
-            $table->unsignedInteger('requisition_id');
-            $table->foreign('requisition_id')->references('requisition_id')->on('requisitions')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('question_id');
-            $table->foreign('question_id')->references('question_id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('used_question_id');
+            $table->foreign('used_question_id')->references('used_question_id')->on('used_questions')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('used_answer_id');
             $table->foreign('used_answer_id')->references('used_answer_id')->on('used_answers')->onDelete('cascade')->onUpdate('cascade');
+            $table->primary(array('used_question_id','used_answer_id'));
+            $table->timestamps();
+        });
+          Schema::create('auquas', function($table)//application_used_question_used_answers
+        {
+            $table->unsignedInteger('application_id');
+            $table->foreign('application_id')->references('application_id')->on('applications')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('used_question_id');
+            $table->foreign('used_question_id')->references('used_question_id')->on('used_questions')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('used_answer_id');
+            $table->foreign('used_answer_id')->references('used_answer_id')->on('used_answers')->onDelete('cascade')->onUpdate('cascade');
+            $table->primary(array('application_id','used_question_id','used_answer_id'));
             $table->timestamps();
         });
           Schema::create('folders', function($table)
@@ -313,9 +319,10 @@ class ConfideSetupUsersTable extends Migration {
         Schema::drop('answers');
         Schema::drop('used_answers');
         Schema::drop('position_questions');
-        Schema::drop('requisition_questions');
+        Schema::drop('used_questions');
         Schema::drop('question_answers');
-        Schema::drop('requisition_question_used_answers');
+        Schema::drop('uquas');//used _question_used_answers
+        Schema::drop('auquas');//application_used_question_used_answers
         Schema::drop('folders');
         Schema::drop('candidate_folders');
     }
