@@ -106,9 +106,10 @@ class ConfideSetupUsersTable extends Migration {
             $table->increments('dept_id');
             $table->string('name');
             $table->unsignedInteger('employee_hrbp_user_id');
+            $table->foreign('employee_hrbp_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('employee_recruiter_user_id');
+            $table->foreign('employee_recruiter_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-            //Foreign Keys are below.
         });
            Schema::create('employees', function($table)
         {   
@@ -261,15 +262,24 @@ class ConfideSetupUsersTable extends Migration {
             $table->foreign('used_answer_id')->references('used_answer_id')->on('used_answers')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
-
-
-//-----------------------------------------------------------------------------
-
-
-        Schema::table('depts', function($table)
+          Schema::create('folder', function($table)
         {
-             $table->foreign('employee_hrbp_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-             $table->foreign('employee_recruiter_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->increments('folder_id');
+            $table->string('name');
+            $table->unsignedInteger('is_in_folder_id')->nullable();
+            $table->foreign('is_in_folder_id')->references('folder_id')->on('folders')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('employee_user_id');
+            $table->foreign('employee_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
+        });
+          Schema::create('candidate_folders', function($table)
+        {
+            $table->unsignedInteger('candidate_user_id');
+            $table->foreign('candidate_user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('is_in_folder_id');
+            $table->foreign('is_in_folder_id')->references('folder_id')->on('folders')->onDelete('cascade')->onUpdate('cascade');
+            $table->primary(array('candidate_user_id','is_in_folder_id'));
+            $table->timestamps();
         });
     }
 
@@ -306,6 +316,8 @@ class ConfideSetupUsersTable extends Migration {
         Schema::drop('requisition_questions');
         Schema::drop('question_answers');
         Schema::drop('requisition_question_used_answers');
+        Schema::drop('folders');
+        Schema::drop('candidate_folders');
     }
 
 }
