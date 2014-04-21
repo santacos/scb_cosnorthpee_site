@@ -262,7 +262,7 @@ class ConfideSetupUsersTable extends Migration {
             $table->foreign('used_answer_id')->references('used_answer_id')->on('used_answers')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
-          Schema::create('folder', function($table)
+          Schema::create('folders', function($table)
         {
             $table->increments('folder_id');
             $table->string('name');
