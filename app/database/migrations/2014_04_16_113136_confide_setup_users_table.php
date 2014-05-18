@@ -13,7 +13,7 @@ class ConfideSetupUsersTable extends Migration {
         // Creates the users table
         Schema::create('users', function($table)
         {
-            $table->integer('user_id');
+            $table->increments('user_id');
             $table->string('username',48);
             $table->string('password',45);
             $table->string('first',45);
@@ -94,7 +94,7 @@ class ConfideSetupUsersTable extends Migration {
         {
             $table->increments('coperate_title_id');
             $table->string('name',45);
-            $table->integer('coperate_title_group_id');
+            $table->unsignedInteger('coperate_title_group_id');
             $table->foreign('coperate_title_group_id')->references('coperate_title_group_id')->on('coperate_title_groups')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();//f
         });
@@ -275,7 +275,7 @@ class ConfideSetupUsersTable extends Migration {
             $table->foreign('application_id')->references('application_id')->on('applications')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('question_id');
             $table->foreign('question_id')->references('question_id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
-            $table->primary(array('application_id', 'answer_id'));
+            $table->primary(array('application_id', 'question_id'));
             $table->timestamps();//f
         });
           Schema::create('interview_logs', function($table)
@@ -289,15 +289,15 @@ class ConfideSetupUsersTable extends Migration {
              $table->primary(array('visit_number', 'application_id'));
              $table->timestamps();//f
         });
-          Schema::create('interview_offer_schedules', function($table)
+          Schema::create('offer_schedules', function($table)
         {
-            $table->unsignedInteger('application_current_status_id');
-            $table->foreign('application_current_status_id')->references('application_current_status_id')->on('application_current_statuses')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('application_cs_id');
+            $table->foreign('application_cs_id')->references('application_current_status_id')->on('application_current_statuses')->onDelete('cascade')->onUpdate('cascade');
              $table->integer('visit_number');
              $table->unsignedInteger('application_id');
              $table->foreign('application_id')->references('application_id')->on('applications')->onDelete('cascade')->onUpdate('cascade');
              $table->timestamp('datetime');
-             $table->primary(array('pplication_current_status_id', 'application_id'));
+             $table->primary(array('application_cs_id', 'application_id'));
              $table->timestamps();//f
         });
             Schema::create('application_logs', function($table)
@@ -381,23 +381,23 @@ class ConfideSetupUsersTable extends Migration {
         });
              Schema::create('SLA_requisitions', function($table)
         {
-            $table->unsignedInteger('coperate_title_group_id');
-            $table->foreign('coperate_title_group_id')->references('coperate_title_group_id')->on('coperate_title_groups')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('requisition_current_status_id');
-            $table->foreign('requisition_current_status_id')->references('requisition_current_status_id')->on('requisition_current_statuses')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('coperate_tg_id');
+            $table->foreign('coperate_tg_id')->references('coperate_title_group_id')->on('coperate_title_groups')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('requisition_cs_id');
+            $table->foreign('requisition_cs_id')->references('requisition_current_status_id')->on('requisition_current_statuses')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('SLA');
-            $table->primary(array('coperate_title_group_id','requisition_current_status_id'));
+            $table->primary(array('coperate_tg_id','requisition_cs_id'));
             $table->timestamps();//f
         });
                Schema::create('SLA_candidates', function($table)
         {
-            $table->unsignedInteger('coperate_title_group_id');
-            $table->foreign('coperate_title_group_id')->references('coperate_title_group_id')->on('coperate_title_groups')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('application_current_status_id');
-            $table->foreign('application_current_status_id')->references('application_current_status_id')->on('application_current_statuses')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('coperate_tg_id');
+            $table->foreign('coperate_tg_id')->references('coperate_title_group_id')->on('coperate_title_groups')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('application_cs_id');
+            $table->foreign('application_cs_id')->references('application_current_status_id')->on('application_current_statuses')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('visit_number');
             $table->integer('SLA');
-             $table->primary(array('coperate_title_group_id','application_current_status_id'));
+             $table->primary(array('coperate_tg_id','application_cs_id'));
             $table->timestamps();//f
         });
                Schema::create('job_carts', function($table)
