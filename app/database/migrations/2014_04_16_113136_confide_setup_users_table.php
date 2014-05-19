@@ -473,6 +473,14 @@ class ConfideSetupUsersTable extends Migration {
             $table->string('filepath_certificate',100);
             $table->timestamps();//f
         }); 
+                Schema::create('public_holidays', function($table)
+        {
+            $table->integer('fisYear');
+            $table->date('public_holiday');
+            $table->string('descripiton',100);
+            $table->primary(array('fisYear','public_holiday'));
+            $table->timestamps();//f
+        }); 
     }
 
     /**
