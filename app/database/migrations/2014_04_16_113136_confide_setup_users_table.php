@@ -533,6 +533,7 @@ class ConfideSetupUsersTable extends Migration {
             Schema::drop('awards');
             Schema::drop('following_jobs');
             Schema::drop('certificates');
+            Schema::drop('public_holidays');
     }
 
 }
